@@ -25,6 +25,7 @@
   "homepage": "https://github.com/minifemtovalen/LIM017-md-links#readme",
   "dependencies": {
     "chalk": "^5.0.1",
-    "commander": "^9.2.0"
+    "commander": "^9.2.0",
+    "fs-extra": "^10.1.0"
   }
 }
