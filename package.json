@@ -2,7 +2,11 @@
   "name": "md-links",
   "version": "1.0.0",
   "description": "A library that loops through MD files to check the links they contain.",
+  "type": "commonjs",
   "main": "util.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "engines": {
     "node": ">=16.x"
   },
@@ -10,7 +14,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -31,9 +35,8 @@
   "devDependencies": {
     "eslint": "^8.15.0",
     "eslint-config-google": "^0.14.0",
-    "eslint-config-standard": "^17.0.0",
-    "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.2.0",
-    "eslint-plugin-promise": "^6.0.0"
+    "eslint-plugin-promise": "^6.0.0",
+    "jest": "^28.1.0"
   }
 }
