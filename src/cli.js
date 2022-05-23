@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const chalk = require('chalk');
 
 const {
   convertToAbsolute,
@@ -9,26 +10,27 @@ const {
 } = require('./util.js');
 
 const route = process.argv[2];
+const log = console.log;
 
 if (!route) {
-  throw new TypeError('Error: Route parameter is required');
+  throw new TypeError(chalk.red.bold('Error: Route parameter is required'));
 }
 
 const absolutePath = convertToAbsolute(route);
 
 if (!isValidPath(absolutePath)) {
-  throw new TypeError('Error: invalid path');
+  throw new TypeError(chalk.red.bold('Error: invalid path'));
 }
 
 if (isDirectory(absolutePath)) {
-  console.log('is a directory');
+  log(chalk.italic.green('is a directory'));
 } else {
   if (isMdFile(absolutePath)) {
-    const links = readFile(absolutePath);
-    console.log(links);
+    const links = chalk.cyan.italic(readFile(absolutePath));
+    log(links);
   } else {
-    throw new TypeError('Error: the extension should be .md');
+    throw new TypeError(chalk.red.bold('Error: the extension should be .md'));
   }
 }
 
-console.log('the absolute path is', absolutePath);
+log(chalk.magenta('the absolute path is'), chalk.cyan.italic(absolutePath));

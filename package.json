@@ -2,7 +2,7 @@
   "name": "md-links",
   "version": "1.0.0",
   "description": "A library that loops through MD files to check the links they contain.",
-  "main": "index.js",
+  "main": "util.js",
   "engines": {
     "node": ">=16.x"
   },
@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/minifemtovalen/LIM017-md-links#readme",
   "dependencies": {
-    "chalk": "^5.0.1",
+    "chalk": "^4.1.2",
     "commander": "^9.2.0",
     "fs-extra": "^10.1.0"
   },
