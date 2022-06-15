@@ -12,17 +12,58 @@ const isValidPath = (route) => fs.existsSync(route);
 
 const isMdFile = (route) => path.extname(route) === '.md';
 
-const readFile = (route) => {
-  const data = fs.readFileSync(route, {encoding: 'utf8'});
-  const matches =
-    data.match(/\[([^\[]+)\]\((http?:|https?:\/\/[\w\d./?=#]+)\)$/gm);
-  return matches;
+
+const getToFileLvl = (route) => {
+  let pathArray = [];
+
+  if (isDirectory(route) === false && isMdFile(route)) {
+    pathArray.push(route);
+  };
+
+  if (isDirectory(route)) {
+    const readDirectory = fs.readdirSync(route);
+    readDirectory.map((el) => {
+      const newPath = path.join(route, el);
+      const newPathArray= getToFileLvl(newPath);
+      pathArray = pathArray.concat(newPathArray);
+    });
+  }
+  return pathArray;
 };
 
+const readFile = (route) => {
+  const linksRegexr = /\[([^\[]+)\]\((http?:|https?:\/\/[\w\d./?=#]+)\)$/gm;
+  const urlRegexr = /\(((?:\/|https?:\/\/)[\w\d./?=#&_%~,.:-]+)\)/gm;
+  const textRegexr = /\[[\w\s\d.()]+\]/;
+  const data = fs.readFileSync(route, {encoding: 'utf8'}).match(linksRegexr);
+
+  return data.map((links) => {
+    const hrefLinks = links.match(urlRegexr).join().slice(1, -1);
+    const textLinks = links.match(textRegexr).join().slice(1, -1);
+
+    const linkData = {
+      href: hrefLinks, // href: URL found
+      text: textLinks, // text inside the link
+      file: convertToAbsolute(route),
+      // file: path of the file where the link was found.
+    };
+    console.log(linkData);
+    return linkData;
+  });
+};
+
+/*
+const linksObject = (route) => {
+  const mdLinksArr = getToFileLvl(route);
+  const linksCollection = mdLinksArr.map((file) => readFile(file));
+  return linksCollection[0];
+}; */
+
 module.exports = {
-  convertToAbsolute,
   isDirectory,
   isValidPath,
   isMdFile,
+  getToFileLvl,
   readFile,
+  convertToAbsolute,
 };
