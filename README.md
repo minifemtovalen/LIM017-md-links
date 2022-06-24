@@ -32,7 +32,7 @@ herramienta usando [Node.js](https://nodejs.org/), que lea y analice archivos
 en formato `Markdown`, para verificar los links que contengan y reportar
 algunas estadísticas.
 
-![md-links](https://raw.githubusercontent.com/minifemtovalen/LIM017-md-links/dev/assets/logo.svgg)
+![md-links](https://raw.githubusercontent.com/minifemtovalen/LIM017-md-links/dev/assets/logo.svg)
 
 ## 2. Resumen del proyecto
 
