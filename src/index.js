@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const {
   isDirectory,
   isValidPath,
@@ -9,11 +10,12 @@ const {
   getLinkStats,
 } = require('./util.js');
 
+
 const mdLinks = (route, {validate, stats}) => {
-  const absolutePath = convertToAbsolute(route);
   if (!route) {
     throw new TypeError(chalk.red.bold('Error: Route parameter is required'));
   }
+  const absolutePath = convertToAbsolute(route);
   if (!isValidPath(absolutePath)) {
     throw new TypeError(chalk.red.bold('Error: invalid path'));
   }

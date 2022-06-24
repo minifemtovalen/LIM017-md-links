@@ -1,9 +1,9 @@
 {
-  "name": "md-links",
+  "name": "md-links-minifemto",
   "version": "1.0.0",
   "description": "A library that loops through MD files to check the links they contain.",
   "type": "commonjs",
-  "main": "util.js",
+  "main": "index.js",
   "publishConfig": {
     "access": "public"
   },
@@ -39,5 +39,8 @@
     "eslint-plugin-n": "^15.2.0",
     "eslint-plugin-promise": "^6.0.0",
     "jest": "^28.1.0"
+  },
+  "bin": {
+    "md-links": "./src/cli.js"
   }
 }
