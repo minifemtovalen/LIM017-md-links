@@ -1,6 +1,6 @@
 {
   "name": "md-links-minifemto",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A library that loops through MD files to check the links they contain.",
   "type": "commonjs",
   "main": "index.js",
