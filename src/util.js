@@ -71,6 +71,32 @@ const validateLink = (links = []) => {
   return Promise.all(allPromises);
 };
 
+const getLinkStats = (links, isValidate) => {
+  const uniqueLinks = [];
+  links.forEach((link) => {
+    if (!uniqueLinks.includes(link.href)) {
+      uniqueLinks.push(link.href);
+    }
+  });
+  if (isValidate) {
+    return validateLink(links).then((res) => {
+      return {
+        total: links.length,
+        unique: uniqueLinks.length,
+        broken: res.filter((el) => el.ok === 'fail').length,
+      };
+    });
+  }
+  return new Promise((resolve) => {
+    resolve(
+        {
+          total: links.length,
+          unique: uniqueLinks.length,
+        },
+    );
+  });
+};
+
 module.exports = {
   isDirectory,
   isValidPath,
@@ -79,4 +105,5 @@ module.exports = {
   readFile,
   convertToAbsolute,
   validateLink,
+  getLinkStats,
 };
