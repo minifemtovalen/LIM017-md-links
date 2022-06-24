@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const axios = require('axios').default;
 
 const convertToAbsolute = (route) => {
   const isAbsolute = path.isAbsolute(route);
@@ -47,17 +48,28 @@ const readFile = (route) => {
       file: convertToAbsolute(route),
       // file: path of the file where the link was found.
     };
-    console.log(linkData);
     return linkData;
   });
 };
 
-/*
-const linksObject = (route) => {
-  const mdLinksArr = getToFileLvl(route);
-  const linksCollection = mdLinksArr.map((file) => readFile(file));
-  return linksCollection[0];
-}; */
+const validateLink = (links = []) => {
+  const allPromises = links.map((link) => {
+    return axios.get(link.href).then((res) => {
+      return {
+        ...link,
+        status: res.status,
+        ok: res.statusText,
+      };
+    }).catch((e) => {
+      return {
+        ...link,
+        status: e.status,
+        ok: 'fail',
+      };
+    });
+  });
+  return Promise.all(allPromises);
+};
 
 module.exports = {
   isDirectory,
@@ -66,4 +78,5 @@ module.exports = {
   getToFileLvl,
   readFile,
   convertToAbsolute,
+  validateLink,
 };

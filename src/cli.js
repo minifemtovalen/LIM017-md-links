@@ -8,10 +8,13 @@ const {
   getToFileLvl,
   readFile,
   convertToAbsolute,
+  validateLink,
 } = require('./util.js');
 
 const route = process.argv[2];
+const isValidate = process.argv.some((el) => el === '--validate');
 const log = console.log;
+log(isValidate);
 
 const absolutePath = convertToAbsolute(route);
 if (!route) {
@@ -24,17 +27,31 @@ if (!isValidPath(absolutePath)) {
 
 if (isDirectory(absolutePath)) {
   const getFile = getToFileLvl(absolutePath);
-  const extractedLinks = getFile.map((link) => {
-    return readFile(link);
+  const extractedLinks = [];
+  getFile.forEach((link) => {
+    extractedLinks.push(...readFile(link));
   });
-  console.log(extractedLinks);
+  if (isValidate) {
+    validateLink(extractedLinks).then((res) => {
+      log(res);
+    });
+  } else {
+    log(extractedLinks);
+  }
 } else {
   if (isMdFile(absolutePath)) {
-    chalk.cyan.italic(readFile(absolutePath));
-    // log(links);
+    const links = readFile(absolutePath);
+    if (isValidate) {
+      validateLink(links).then((res) => {
+        log(res);
+      });
+    } else {
+      log(links);
+    }
   } else {
     throw new TypeError(chalk.red.bold('Error: the extension should be .md'));
   }
 }
 
 log(chalk.magenta('the absolute path is'), chalk.cyan.italic(absolutePath));
+
