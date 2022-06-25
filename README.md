@@ -1,7 +1,7 @@
 
 ![md-links](https://raw.githubusercontent.com/minifemtovalen/LIM017-md-links/dev/assets/logo.svg)
 
-**md-links** is a  library that loops through MD files to check the links they contain.
+**md-links** is a  library that loops through markdown files to check the links they contain.
 
 ## Getting Started
 
@@ -48,5 +48,5 @@ It will return
 - text: Text that appeared inside the link (<a>).
 - file: Path of the file where the link was found.
 
-**Always enter the path** (otherwise it will show an error)
+**Always enter the path** (otherwise it will throw an error)
 
